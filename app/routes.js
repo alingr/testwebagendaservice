@@ -52,6 +52,17 @@ module.exports = function (app) {
         });
     });
 
+        // update a todo
+        app.put('/api/todos/:todo_id/:isDone', function (req, res) {
+            Todo.findByIdAndUpdate(req.params.todo_id, { 
+                $set: { isDone: req.params.isDone }}, {upsert:true}, function (err, todo) {
+                if (err)
+                    res.send(err);
+    
+                getTodos(res);
+            });
+        });
+
 
     // application -------------------------------------------------------------
     app.get('*', function (req, res) {

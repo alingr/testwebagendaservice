@@ -15,5 +15,9 @@ module.exports = mongoose.model('Todo', {
     dueDate: {
         type: Date,
         default: null
+    },
+    isDone: {
+        type: Boolean,
+        default: false
     }
 });

@@ -31,6 +31,10 @@
 		#todo-form {
 			margin-bottom: 50px;
 		}
+
+		.done {
+			text-decoration: line-through;
+		}
 	</style>
 
 	<!-- SPELLS -->
@@ -64,13 +68,17 @@
 
 
 				<!-- LOOP OVER THE TODOS IN $scope.todos -->
-				<div class="panel panel-primary" align="center" ng-repeat="todo in todos">
-					<div class="panel-heading">{{ todo.text }}</div>
-					<div class="panel-body">
+				<div ng-class="todo.isDone ? 'panel panel-success' : 'panel panel-primary'" align="center" ng-repeat="todo in todos">
+					<div ng-class="todo.isDone ? 'done' : ''" class="panel-heading">{{ todo.text }}</div>
+					<div ng-class="todo.isDone ? 'done' : ''" class="panel-body">
+						<i ng-if="todo.isDone" class="fa fa-check" aria-hidden="true"> Done </i>
 						<p>Priority: {{ todo.priority }}</p>
 						<p ng-if="todo.dueDate">Due date: {{ todo.dueDate | date:'dd/MM/yyyy' }}</p>
+						<!-- <p>isDone: {{ todo.isDone }}</p> -->
 
 						<p>
+							<input ng-if="!todo.isDone" type="button" class="btn btn-success" value="Mark as done" ng-click="updateTodo(todo._id, true)">
+							<input ng-if="todo.isDone" type="button" class="btn btn-warning" value="Mark as undone" ng-click="updateTodo(todo._id, false)">
 							<input type="button" class="btn btn-danger" value="Delete" ng-click="deleteTodo(todo._id)">
 						</p>
 					</div>
